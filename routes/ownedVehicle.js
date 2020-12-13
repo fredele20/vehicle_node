@@ -10,9 +10,11 @@ router.post('/', async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message)
 
   const user = await User.findById(req.body.userId)
+  console.log(user)
   if (!user) return res.status(400).send('Invalid user')
 
   const vehicle = await Vehicle.findById(req.body.vehicleId)
+  console.log(vehicle)
   if (!vehicle) return res.status(400).send('Invalid vehicle, already taken')
 
   let ownedVehicle = new OwnedVehicle({
@@ -26,6 +28,12 @@ router.post('/', async (req, res) => {
       name: vehicle.name
     }
   })
+
+  console.log(ownedVehicle)
+
+  ownedVehicle = await ownedVehicle.save()
+  console.log(ownedVehicle)
+  res.send(ownedVehicle)
 })
 
 module.exports = router

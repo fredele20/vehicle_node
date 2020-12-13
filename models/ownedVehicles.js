@@ -1,22 +1,27 @@
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
 const mongoose = require('mongoose')
 
 
 const ownedVehicleSchema = new mongoose.Schema({
   vehicle: {
     type: new mongoose.Schema({
-      name: String,
-      require: true
+      name: {
+        type:  String,
+        require: true
+      },
     }),
     required: true
   },
 
   user: {
     type: new mongoose.Schema({
-      name: String,
-      require: true
+      name: {
+        type: String,
+        required: true
+      }
     }),
-    required
+    required: true
   },
 
   createdAt: {
@@ -26,7 +31,8 @@ const ownedVehicleSchema = new mongoose.Schema({
   },
 
   isDeleted: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 })
 
