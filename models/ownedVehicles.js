@@ -9,7 +9,7 @@ const ownedVehicleSchema = new mongoose.Schema({
       name: {
         type:  String,
         require: true
-      },
+      }
     }),
     required: true
   },
@@ -36,6 +36,8 @@ const ownedVehicleSchema = new mongoose.Schema({
   }
 })
 
+// This is a static type of function that match the vehicleId and
+// userId to the ownedVehicleSchema.
 ownedVehicleSchema.statics.lookup = function (vehicleId, userId) {
   return this.findOne({
     'vehicle._id': vehicleId,
@@ -43,6 +45,7 @@ ownedVehicleSchema.statics.lookup = function (vehicleId, userId) {
   })
 }
 
+// This is validation based on Joi library
 function validateOwnedVehicle(ownedVehicle) {
   const schema = {
     vehicleId: Joi.objectId().required(),

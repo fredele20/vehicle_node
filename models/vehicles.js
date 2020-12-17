@@ -15,6 +15,11 @@ const vehicleSchema = new mongoose.Schema({
   number: {
     type: String,
     required: [true, 'Please add the vehicle plate number']
+  },
+
+  isOwned: {
+    type: Boolean,
+    default: false
   }
 
 })
