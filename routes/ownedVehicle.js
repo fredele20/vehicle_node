@@ -3,12 +3,13 @@ const mongoose = require('mongoose')
 const { validate, OwnedVehicle } = require('../models/ownedVehicles')
 const { User } = require('../models/user')
 const { Vehicle } = require('../models/vehicles')
+const { auth } = require('../middlewares/auth')
 const router = express.Router()
 
 // This route is to acquire and own a vehicle,
 // A vehicle that is already owned by another user
 // can no longer be available for ownership.
-router.post('/', async (req, res) => {
+router.post('/', auth,  async (req, res) => {
 
   // This line is used to validate the request body.
   // i.e the necessary input fields
@@ -53,15 +54,15 @@ router.post('/', async (req, res) => {
   res.send(ownedVehicle)
 })
 
-// This route get all the Vehicle that are already owned by any user
-router.get("/", async(req, res) => {
+// This route get all the Vehicle that are already owned by any user (occupied vehicles)
+router.get("/", auth, async(req, res) => {
   // This line is getting all owned vehicle from the OwnedVehicle collection
   const ownedVehicle = await OwnedVehicle.find()
   res.send(ownedVehicle)
 })
 
 // this route get all the vehicles own by a particular user
-router.get("/:id", async(req, res) => {
+router.get("/:id", auth, async(req, res) => {
 
   // This is a constant to help check if the ObjectId is valid later.
   const tryValid = mongoose.Types.ObjectId.isValid(req.params.id)

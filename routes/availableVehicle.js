@@ -1,9 +1,10 @@
 const express = require('express')
 const { Vehicle } = require('../models/vehicles')
+const { auth } = require('../middlewares/auth')
 const router = express.Router()
 
 // This route is used to get all the availabel vehicles.
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
 
   // here, we find by the isOwned property in the Vehicle collection,
   // If it is not false, that means all the vehicle is owned by some users.
