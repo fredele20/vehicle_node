@@ -37,6 +37,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async(req, res) => {
   // Validate the request body for login details
   const { error } = validateLogin(req.body)
+  if (error) return res.status(400).send(error.details[0].message);
 
   // Validate the email if it is correct or not
   let user = await User.findOne({ email: req.body.email })
